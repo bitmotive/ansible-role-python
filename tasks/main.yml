@@ -21,7 +21,6 @@
   file: path=/srv/{{ item }} state=directory 
   with_items:
     - www
-    - wsgi
   tags: 
     - app 
     - app-folders

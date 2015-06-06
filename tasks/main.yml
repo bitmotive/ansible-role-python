@@ -33,14 +33,14 @@
         state=directory 
         owner=root 
         group=webworkers 
-        mode=0740
+        mode=2750
   tags: 
     - virtualenv
 
 - name: app directory
   file: path=/srv/www
         state=directory 
-        owner=webworker
+        owner=webhead
         group=webworkers
         mode=0770
   tags: 

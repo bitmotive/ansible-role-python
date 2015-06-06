@@ -1,5 +1,5 @@
 # Name of directory that will hold app files                                                                        
-py_app_source_folder = 'demoapp.com'                                                                                
+py_app_source_folder: 'demoapp.com'                                                                                
                                                                                                                     
 # Name of app virtualenv                                                                                            
-py_app_virtualenv_folder = 'demoapp'
+py_app_virtualenv_folder: 'demoapp'

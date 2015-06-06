@@ -1,0 +1,35 @@
+---
+# Install pip, virtualenv, and python project requirements
+
+- name: pip | install pip via yum
+  yum: name=python-pip state=latest
+  tags:
+   - pip
+
+- name: virtualenv | install virtualenv via pip
+  pip: name=virtualenv
+       state=present
+  tags:
+    - virtualenv
+
+- name: virtualenv | create global storage directory
+  file: path=/srv/virtualenv state=directory 
+  tags: 
+    - virtualenv
+
+- name: app directory paths
+  file: path=/srv/{{ item }} state=directory 
+  with_items:
+    - www
+    - wsgi
+  tags: 
+    - app 
+    - app-folders
+
+- name: requirements | install requirements.txt
+  pip: requirements=/srv/www/{{ py_app_source_folder }}/requirements.txt
+       virtualenv_command=/usr/bin/virtualenv
+       virtualenv=/srv/virtualenv/{{ py_app_virtualenv_folder }}
+  tags:
+    - app
+    - app-requirements

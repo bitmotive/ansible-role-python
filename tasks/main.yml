@@ -1,6 +1,22 @@
 ---
 # Install pip, virtualenv, and python project requirements
 
+- name: groups necessary for web apps
+  group: name={{ item }} 
+         state=present
+         system=yes
+  with_items:
+    - webworkers
+  tags: 
+    - app-groups
+
+- name: users necessary for web apps
+  user: name=webhead
+        state=present
+        group=webworkers
+  tags:
+    - app-users
+
 - name: pip | install pip via yum
   yum: name=python-pip state=latest
   tags:
@@ -13,14 +29,20 @@
     - virtualenv
 
 - name: virtualenv | create global storage directory
-  file: path=/srv/virtualenv state=directory 
+  file: path=/srv/virtualenv 
+        state=directory 
+        owner=root 
+        group=webworkers 
+        mode=0740
   tags: 
     - virtualenv
 
-- name: app directory paths
-  file: path=/srv/{{ item }} state=directory 
-  with_items:
-    - www
+- name: app directory
+  file: path=/srv/www
+        state=directory 
+        owner=webworker
+        group=webworkers
+        mode=0770
   tags: 
     - app 
     - app-folders
